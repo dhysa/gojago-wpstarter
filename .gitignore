@@ -1,0 +1,10 @@
+.DS_Store
+.env.local
+node_modules/
+npm-debug.log*
+wp-content/themes/gojago-starter/assets/css/*.map
+wp-content/themes/gojago-starter/build/
+wordpress/
+plugins/*
+!plugins/.gitkeep
+inspo/

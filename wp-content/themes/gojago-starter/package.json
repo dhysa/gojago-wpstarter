@@ -1,0 +1,23 @@
+{
+  "name": "gojago-starter",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wp-scripts start src/blocks/example-block/index.js --output-path=build/blocks/example-block & tailwindcss -i ./src/css/main.css -o ./assets/css/main.css --watch",
+    "build": "wp-scripts build src/blocks/example-block/index.js --output-path=build/blocks/example-block && cp src/blocks/example-block/block.json build/blocks/example-block/block.json && tailwindcss -i ./src/css/main.css -o ./assets/css/main.css --minify"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "latest",
+    "@wordpress/blocks": "latest",
+    "@wordpress/components": "latest",
+    "@wordpress/element": "latest",
+    "@wordpress/i18n": "latest"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "latest",
+    "tailwindcss": "latest",
+    "@tailwindcss/cli": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest"
+  }
+}
