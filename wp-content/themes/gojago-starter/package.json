@@ -1,10 +1,10 @@
 {
   "name": "gojago-starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
-    "dev": "wp-scripts start src/blocks/example-block/index.js --output-path=build/blocks/example-block & tailwindcss -i ./src/css/main.css -o ./assets/css/main.css --watch",
-    "build": "wp-scripts build src/blocks/example-block/index.js --output-path=build/blocks/example-block && cp src/blocks/example-block/block.json build/blocks/example-block/block.json && tailwindcss -i ./src/css/main.css -o ./assets/css/main.css --minify"
+    "dev": "wp-scripts start resources/views/partials/block/example-block/index.js --output-path=public/blocks/example-block & tailwindcss -i ./resources/styles/app.css -o ./public/css/app.css --watch",
+    "build": "wp-scripts build resources/views/partials/block/example-block/index.js --output-path=public/blocks/example-block && cp resources/views/partials/block/example-block/block.json public/blocks/example-block/block.json && tailwindcss -i ./resources/styles/app.css -o ./public/css/app.css --minify"
   },
   "dependencies": {
     "@wordpress/block-editor": "latest",

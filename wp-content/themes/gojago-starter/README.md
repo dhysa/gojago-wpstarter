@@ -4,8 +4,8 @@ This theme is the editable block-theme layer for the local WordPress starter. Mo
 
 Key locations:
 
-- `templates/*.html`: block theme templates
-- `parts/header.html` and `parts/footer.html`: Site Editor-managed template parts
-- `patterns/*.php`: reusable editable homepage sections
-- `src/blocks/example-block`: example React/Gutenberg block
-- `inc/`: focused PHP setup modules
+- `resources/views/templates/*.html`: block theme templates
+- `resources/views/parts/header.html` and `resources/views/parts/footer.html`: Site Editor-managed template parts
+- `resources/views/patterns/*.php`: reusable editable homepage sections
+- `resources/views/partials/block/example-block`: example React/Gutenberg block
+- `app/`: focused PHP setup modules

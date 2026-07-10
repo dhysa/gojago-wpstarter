@@ -1,11 +1,10 @@
 module.exports = {
   content: [
     './*.php',
-    './inc/**/*.php',
-    './patterns/**/*.php',
-    './parts/**/*.html',
-    './templates/**/*.html',
-    './src/**/*.js'
+    './app/**/*.php',
+    './resources/views/**/*.php',
+    './resources/views/**/*.html',
+    './resources/**/*.js'
   ],
   theme: {
     extend: {

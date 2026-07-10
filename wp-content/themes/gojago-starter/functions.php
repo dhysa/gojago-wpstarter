@@ -9,20 +9,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GOJAGO_STARTER_VERSION', '1.0.0' );
+define( 'GOJAGO_STARTER_VERSION', '1.1.0' );
 define( 'GOJAGO_STARTER_PATH', trailingslashit( get_template_directory() ) );
 define( 'GOJAGO_STARTER_URI', trailingslashit( get_template_directory_uri() ) );
 
 $gojago_starter_includes = array(
-	'inc/setup/theme-support.php',
-	'inc/setup/enqueue.php',
-	'inc/setup/menus.php',
-	'inc/setup/blocks.php',
-	'inc/setup/required-plugins.php',
-	'inc/acf/acf.php',
-	'inc/seo/seo.php',
-	'inc/analytics/analytics.php',
-	'inc/gravity-forms/gravity-forms.php',
+	'app/setup/theme-support.php',
+	'app/setup/enqueue.php',
+	'app/setup/menus.php',
+	'app/setup/blocks.php',
+	'app/setup/views.php',
+	'app/setup/admin-bar.php',
+	'app/setup/required-plugins.php',
+	'app/acf/acf.php',
+	'app/seo/seo.php',
+	'app/analytics/analytics.php',
+	'app/security/login-hardening.php',
+	'app/gravity-forms/gravity-forms.php',
 );
 
 foreach ( $gojago_starter_includes as $gojago_starter_file ) {
