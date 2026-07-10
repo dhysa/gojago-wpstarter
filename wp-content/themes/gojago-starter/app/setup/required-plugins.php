@@ -18,6 +18,13 @@ function gojago_starter_required_plugins() {
 			'indicator'   => 'all-in-one-wp-migration/all-in-one-wp-migration.php',
 			'note'        => __( 'Installed automatically from WordPress.org during local setup when available.', 'gojago-starter' ),
 		),
+		'all-in-one-wp-migration-unlimited-extension' => array(
+			'label'       => 'All-in-One WP Migration Unlimited Extension',
+			'plugin_file' => 'all-in-one-wp-migration-unlimited-extension/all-in-one-wp-migration-unlimited-extension.php',
+			'hints'       => array( 'all-in-one-wp-migration-unlimited', 'ai1wm-unlimited', 'unlimited-extension' ),
+			'indicator'   => 'all-in-one-wp-migration-unlimited-extension/all-in-one-wp-migration-unlimited-extension.php',
+			'note'        => __( 'Place the licensed Unlimited Extension ZIP in plugins/ to remove the All-in-One WP Migration import size limit.', 'gojago-starter' ),
+		),
 		'wp-cerber'     => array(
 			'label'       => 'WP Cerber Security',
 			'plugin_file' => 'wp-cerber/wp-cerber.php',

@@ -54,7 +54,7 @@ services:
       PMA_HOST: db
       PMA_USER: root
       PMA_PASSWORD: ${WORDPRESS_DB_ROOT_PASSWORD}
-      UPLOAD_LIMIT: 64M
+      UPLOAD_LIMIT: 0
 
   wpcli:
     image: wordpress:cli
@@ -88,7 +88,32 @@ services:
         if ! wp core is-installed --path=/var/www/html >/dev/null 2>&1; then
           wp core install --path=/var/www/html --url="$${WORDPRESS_SITE_URL}" --title="$${WORDPRESS_SITE_TITLE}" --admin_user="$${WORDPRESS_ADMIN_USER}" --admin_password="$${WORDPRESS_ADMIN_PASSWORD}" --admin_email="$${WORDPRESS_ADMIN_EMAIL}" --skip-email;
         fi;
+        find_plugin_zip() {
+          plugin_file="$$1";
+          shift;
+          for zip in /project-plugins/*.zip; do
+            [ -f "$$zip" ] || continue;
+            for hint in "$$@"; do
+              echo "$$zip" | grep -Eiq "$$hint" && { printf "%s" "$$zip"; return 0; };
+            done;
+            unzip -l "$$zip" 2>/dev/null | grep -Eq "$$plugin_file" && { printf "%s" "$$zip"; return 0; };
+          done;
+          return 1;
+        };
+        install_zip_plugin_if_available() {
+          slug="$$1";
+          plugin_file="$$2";
+          shift 2;
+          if zip="$$(find_plugin_zip "$$plugin_file" "$$@")"; then
+            wp plugin install "$$zip" --force --activate --path=/var/www/html || true;
+            wp plugin activate "$$slug" --path=/var/www/html || true;
+          elif wp plugin is-installed "$$slug" --path=/var/www/html >/dev/null 2>&1; then
+            wp plugin activate "$$slug" --path=/var/www/html || true;
+          fi;
+        };
         wp theme activate gojago-starter --path=/var/www/html;
+        wp plugin install all-in-one-wp-migration --version=6.77 --force --activate --path=/var/www/html || true;
+        install_zip_plugin_if_available all-in-one-wp-migration-unlimited-extension all-in-one-wp-migration-unlimited-extension/all-in-one-wp-migration-unlimited-extension.php all-in-one-wp-migration-unlimited ai1wm-unlimited unlimited-extension;
         wp theme delete twentytwentysix twentytwentyfive twentytwentyfour twentytwentythree twentytwentytwo --path=/var/www/html || true;
         wp post delete 1 2 --force --path=/var/www/html || true;
         wp rewrite structure "/%postname%/" --path=/var/www/html;
