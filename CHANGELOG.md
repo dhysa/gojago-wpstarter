@@ -4,6 +4,11 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.3 - 2026-07-13
+
+- Removed All-in-One WP Migration Unlimited Extension from starter requirements, automatic setup, and dashboard reminder checks.
+- Kept the core All-in-One WP Migration plugin as the required backup/migration plugin.
+
 ## v1.1.2 - 2026-07-13
 
 - Added `GOJAGO_LOGIN_SLUG=managesite` and a must-use login hardening plugin.
@@ -16,7 +21,6 @@ This repository is a development starter factory. Client repositories should usu
 ## v1.1.1 - 2026-07-10
 
 - Added All-in-One WP Migration automatic install support.
-- Added All-in-One WP Migration Unlimited Extension ZIP detection.
 - Raised local upload/runtime limits for migration workflows.
 - Bumped shared starter/theme version metadata to `1.1.1`.
 

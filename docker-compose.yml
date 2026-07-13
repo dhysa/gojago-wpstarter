@@ -132,7 +132,6 @@ services:
         install_zip_plugin_if_available wp-cerber wp-cerber/wp-cerber.php wp-cerber cerber;
         install_zip_plugin_if_available advanced-custom-fields-pro advanced-custom-fields-pro/acf.php acf-pro advanced-custom-fields-pro;
         install_zip_plugin_if_available gravityforms gravityforms/gravityforms.php gravityforms gravity-forms;
-        install_zip_plugin_if_available all-in-one-wp-migration-unlimited-extension all-in-one-wp-migration-unlimited-extension/all-in-one-wp-migration-unlimited-extension.php all-in-one-wp-migration-unlimited ai1wm-unlimited unlimited-extension;
         wp plugin delete hello akismet --path=/var/www/html || true;
         wp theme delete twentytwentysix twentytwentyfive twentytwentyfour twentytwentythree twentytwentytwo --path=/var/www/html || true;
         wp post delete 1 2 --force --path=/var/www/html || true;

@@ -17,6 +17,11 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.2 to v1.1.3
+
+- Remove any project-specific requirement/reminder for All-in-One WP Migration Unlimited Extension.
+- Keep All-in-One WP Migration core installed and active for backup/migration workflows.
+
 ## From v1.1.1 to v1.1.2
 
 - Copy `wp-content/mu-plugins/gojago-login-hardening.php` into existing client projects that should use `/managesite`.
@@ -29,5 +34,4 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 ## From v1.0.0 to v1.1.1
 
 - Update `docker-compose.yml` if the project should install All-in-One WP Migration automatically.
-- Copy `wp-content/themes/gojago-starter/app/setup/required-plugins.php` if the project should detect the All-in-One WP Migration Unlimited Extension ZIP.
 - Update `docker/php/uploads.ini` if the project needs unlimited local migration upload/runtime limits.

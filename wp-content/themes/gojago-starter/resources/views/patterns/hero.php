@@ -30,7 +30,7 @@
       <li>Example custom Gutenberg block</li>
       <li>ACF Pro auto-installed from the newest local ZIP</li>
       <li>Gravity Forms Pro auto-installed from the newest local ZIP</li>
-      <li>All-in-One WP Migration requested as version 6.77</li>
+      <li>All-in-One WP Migration installed for backup and migration workflows</li>
       <li>WP Cerber Security active</li>
       <li>Custom login URL at /managesite with default login route blocked</li>
       <li>SEO helper scaffold</li>
