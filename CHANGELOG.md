@@ -4,6 +4,12 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.7 - 2026-07-13
+
+- Fixed custom login flow so successful `/managesite` logins land in the WordPress dashboard instead of the login route or a not-found page.
+- Redirected authenticated visits to `/managesite` into `wp-admin`.
+- Updated docs to present `/managesite` as the admin login entrypoint.
+
 ## v1.1.6 - 2026-07-13
 
 - Replaced multi-page starter seed content with a minimal Home page and one disposable Starter Features inventory page.

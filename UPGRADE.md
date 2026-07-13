@@ -17,6 +17,12 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.6 to v1.1.7
+
+- Copy the updated `wp-content/mu-plugins/gojago-login-hardening.php` into projects using `/managesite`.
+- Confirm logging in from `/managesite` redirects authenticated users to the WordPress dashboard.
+- Update project docs and QA notes so `/managesite` is the login/admin entrypoint, while `/wp-login.php` remains blocked for unauthenticated users.
+
 ## From v1.1.5 to v1.1.6
 
 - Replace fake starter content pages such as About, Services, and Contact with only Home plus a disposable Starter Features page.

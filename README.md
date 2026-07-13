@@ -76,7 +76,7 @@ Then:
 ## Local URLs
 
 - Site: http://localhost:8080
-- Admin: http://localhost:8080/wp-admin
+- Admin login: http://localhost:8080/managesite
 - phpMyAdmin: http://localhost:8081
 
 ## Dummy Admin Login
@@ -264,7 +264,7 @@ Optimize supplied videos for lightweight native `<video>` playback, use `preload
 - Run `docker compose up -d`
 - Confirm `docker compose ps` shows healthy/running services
 - Confirm site returns `200 OK`
-- Confirm wp-admin is reachable
+- Confirm `http://localhost:8080/managesite` opens login and successful login lands in the WordPress dashboard
 - Confirm phpMyAdmin is reachable
 - Confirm `gojago-starter` is active
 - Confirm `wp theme list` shows only `gojago-starter`
@@ -286,7 +286,7 @@ Verified on June 23, 2026:
 - `docker compose up -d`: passed
 - `docker compose ps`: `project_db`, `project_wordpress`, `project_phpmyadmin`, and `project_wpcli` running
 - Site `http://localhost:8080`: `200 OK`
-- Admin `http://localhost:8080/wp-admin/`: reachable, redirects to login as expected
+- Admin login `http://localhost:8080/managesite`: reachable and redirects authenticated users to the WordPress dashboard
 - phpMyAdmin `http://localhost:8081`: `200 OK`
 - Active theme: `gojago-starter`
 - Installed themes: only `gojago-starter`

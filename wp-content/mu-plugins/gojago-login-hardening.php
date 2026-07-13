@@ -29,6 +29,23 @@ function gojago_serve_login() {
 	exit;
 }
 
+function gojago_is_login_route_url( $url ) {
+	if ( ! $url ) {
+		return true;
+	}
+
+	$path = wp_parse_url( $url, PHP_URL_PATH );
+	$path = trim( (string) $path, '/' );
+
+	return in_array( $path, array( gojago_login_slug(), 'wp-login.php' ), true );
+}
+
+function gojago_is_login_action_request() {
+	$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
+
+	return in_array( $action, array( 'logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'postpass' ), true );
+}
+
 function gojago_block_default_login() {
 	status_header( 404 );
 	nocache_headers();
@@ -43,6 +60,11 @@ add_action(
 		$slug = gojago_login_slug();
 
 		if ( $slug === $path ) {
+			if ( is_user_logged_in() && ! gojago_is_login_action_request() && ( empty( $_SERVER['REQUEST_METHOD'] ) || 'GET' === $_SERVER['REQUEST_METHOD'] ) ) {
+				wp_safe_redirect( admin_url() );
+				exit;
+			}
+
 			gojago_serve_login();
 		}
 
@@ -72,6 +94,23 @@ add_filter(
 		}
 
 		return add_query_arg( $args, home_url( '/' . gojago_login_slug() . '/' ) );
+	},
+	10,
+	3
+);
+
+add_filter(
+	'login_redirect',
+	function ( $redirect_to, $requested_redirect_to, $user ) {
+		if ( is_wp_error( $user ) ) {
+			return $redirect_to;
+		}
+
+		if ( gojago_is_login_route_url( $redirect_to ) || gojago_is_login_route_url( $requested_redirect_to ) ) {
+			return admin_url();
+		}
+
+		return $redirect_to ?: admin_url();
 	},
 	10,
 	3
