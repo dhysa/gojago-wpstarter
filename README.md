@@ -202,7 +202,9 @@ Theme hooks and CSS are ready for Gravity Forms styling in:
 
 `plugins/` is mounted read-only into WordPress and WP-CLI as `/project-plugins`.
 
-Files inside `plugins/` are ignored by git, while `plugins/.gitkeep` preserves the folder. The wp-admin reminder checks filename hints and ZIP contents where possible, then protects install actions with nonces and capability checks.
+Files inside `plugins/` are ignored by git, while `plugins/.gitkeep` preserves the folder. The wp-admin reminder checks filename hints and ZIP contents where possible, picks the newest matching ZIP by plugin header version, filename version, or file modified time, then protects install/update actions with nonces and capability checks.
+
+When local setup runs again, matching ZIP plugins are installed with overwrite/force behavior, then WordPress is asked to update the plugin to the latest available version from its official updater. For paid plugins, that latest update depends on a valid plugin license/update channel being available in WordPress. If the updater cannot provide a newer package, the starter keeps the newest valid local ZIP active.
 
 ## Upload Limits
 

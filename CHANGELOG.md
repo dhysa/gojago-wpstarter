@@ -4,6 +4,12 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.5 - 2026-07-13
+
+- Updated ZIP-based plugin installs to select the newest matching package instead of the first match.
+- Made local setup and wp-admin install helpers overwrite existing ZIP-installed plugins, then ask WordPress to update them to the latest available version from their official updater before final activation.
+- Documented the rerun workflow for replacing ACF Pro, Gravity Forms Pro, WP Cerber, or other local ZIP plugins with newer ZIP files.
+
 ## v1.1.4 - 2026-07-13
 
 - Clarified that `resources/views` is the only source location for block templates, template parts, and patterns.

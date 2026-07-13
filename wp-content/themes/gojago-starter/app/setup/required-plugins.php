@@ -53,6 +53,61 @@ function gojago_starter_project_plugin_dir() {
 	return is_dir( '/project-plugins' ) ? '/project-plugins' : trailingslashit( dirname( GOJAGO_STARTER_PATH, 4 ) ) . 'plugins';
 }
 
+function gojago_starter_zip_filename_version( $zip ) {
+	if ( preg_match( '/(\d+(?:\.\d+){1,4})/', basename( $zip ), $matches ) ) {
+		return $matches[1];
+	}
+
+	return '';
+}
+
+function gojago_starter_zip_plugin_header_version( $zip, $indicator ) {
+	if ( ! class_exists( 'ZipArchive' ) || ! $indicator ) {
+		return '';
+	}
+
+	$archive = new ZipArchive();
+	if ( true !== $archive->open( $zip ) ) {
+		return '';
+	}
+
+	$contents = $archive->getFromName( $indicator );
+	$archive->close();
+
+	if ( false !== $contents && preg_match( '/^[ \t\/*#@]*Version:\s*([^\s]+)/mi', $contents, $matches ) ) {
+		return $matches[1];
+	}
+
+	return '';
+}
+
+function gojago_starter_latest_plugin_zip( $zips, $indicator = '' ) {
+	$zips = array_values( array_unique( array_filter( $zips ) ) );
+	if ( ! $zips ) {
+		return '';
+	}
+
+	usort(
+		$zips,
+		function ( $a, $b ) use ( $indicator ) {
+			$a_version = gojago_starter_zip_plugin_header_version( $a, $indicator ) ?: gojago_starter_zip_filename_version( $a );
+			$b_version = gojago_starter_zip_plugin_header_version( $b, $indicator ) ?: gojago_starter_zip_filename_version( $b );
+
+			if ( $a_version && $b_version ) {
+				$version_compare = version_compare( $a_version, $b_version );
+				if ( 0 !== $version_compare ) {
+					return $version_compare;
+				}
+			}
+
+			$time_compare = filemtime( $a ) <=> filemtime( $b );
+			return 0 !== $time_compare ? $time_compare : strcmp( $a, $b );
+		}
+	);
+
+	return end( $zips );
+}
+
 function gojago_starter_find_plugin_zip( $plugin ) {
 	$dir = gojago_starter_project_plugin_dir();
 	if ( ! is_dir( $dir ) ) {
@@ -64,11 +119,13 @@ function gojago_starter_find_plugin_zip( $plugin ) {
 		return '';
 	}
 
+	$matches = array();
+
 	foreach ( $zips as $zip ) {
 		$name = strtolower( basename( $zip ) );
 		foreach ( $plugin['hints'] as $hint ) {
 			if ( false !== strpos( $name, $hint ) ) {
-				return $zip;
+				$matches[] = $zip;
 			}
 		}
 	}
@@ -79,8 +136,8 @@ function gojago_starter_find_plugin_zip( $plugin ) {
 			if ( true === $archive->open( $zip ) ) {
 				for ( $i = 0; $i < $archive->numFiles; $i++ ) {
 					if ( $plugin['indicator'] === $archive->getNameIndex( $i ) ) {
-						$archive->close();
-						return $zip;
+						$matches[] = $zip;
+						break;
 					}
 				}
 				$archive->close();
@@ -88,7 +145,7 @@ function gojago_starter_find_plugin_zip( $plugin ) {
 		}
 	}
 
-	return '';
+	return gojago_starter_latest_plugin_zip( $matches, $plugin['indicator'] );
 }
 
 add_action(
@@ -124,7 +181,7 @@ add_action(
 				'<li><strong>%1$s</strong>: %2$s. %3$s%4$s</li>',
 				esc_html( $plugin['label'] ),
 				esc_html( $status ),
-				$zip ? '<a class="button button-small" href="' . esc_url( $url ) . '">' . esc_html__( 'Install and activate', 'gojago-starter' ) . '</a>' : '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=upload' ) ) . '">' . esc_html__( 'Upload plugin ZIP', 'gojago-starter' ) . '</a>',
+				$zip ? '<a class="button button-small" href="' . esc_url( $url ) . '">' . esc_html__( 'Install ZIP, update latest, activate', 'gojago-starter' ) . '</a>' : '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=upload' ) ) . '">' . esc_html__( 'Upload plugin ZIP', 'gojago-starter' ) . '</a>',
 				isset( $plugin['note'] ) ? ' <span class="description">' . esc_html( $plugin['note'] ) . '</span>' : ''
 			);
 		}
@@ -164,13 +221,23 @@ add_action(
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 
 		$upgrader = new Plugin_Upgrader( new Automatic_Upgrader_Skin() );
-		$result   = $upgrader->install( $zip );
+		$result   = $upgrader->install(
+			$zip,
+			array(
+				'overwrite_package' => true,
+			)
+		);
 
 		if ( is_wp_error( $result ) ) {
 			wp_die( esc_html( $result->get_error_message() ) );
 		}
 
 		activate_plugin( $plugin['plugin_file'] );
+
+		wp_update_plugins();
+		$upgrader->upgrade( $plugin['plugin_file'] );
+		activate_plugin( $plugin['plugin_file'] );
+
 		wp_safe_redirect( admin_url( 'plugins.php' ) );
 		exit;
 	}

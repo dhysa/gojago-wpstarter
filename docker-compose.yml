@@ -98,13 +98,15 @@ services:
         find_plugin_zip() {
           plugin_file="$$1";
           shift;
-          for zip in /project-plugins/*.zip; do
+          match="";
+          for zip in $$(find /project-plugins -maxdepth 1 -type f -name "*.zip" 2>/dev/null | sort -V); do
             [ -f "$$zip" ] || continue;
             for hint in "$$@"; do
-              echo "$$zip" | grep -Eiq "$$hint" && { printf "%s" "$$zip"; return 0; };
+              echo "$$zip" | grep -Eiq "$$hint" && match="$$zip";
             done;
-            unzip -l "$$zip" 2>/dev/null | grep -Eq "$$plugin_file" && { printf "%s" "$$zip"; return 0; };
+            unzip -l "$$zip" 2>/dev/null | grep -Eq "$$plugin_file" && match="$$zip";
           done;
+          [ -n "$$match" ] && { printf "%s" "$$match"; return 0; };
           return 1;
         };
         seed_clean_homepage() {
@@ -122,13 +124,16 @@ services:
           shift 2;
           if zip="$$(find_plugin_zip "$$plugin_file" "$$@")"; then
             wp plugin install "$$zip" --force --activate --path=/var/www/html || true;
+            wp plugin update "$$slug" --path=/var/www/html || true;
             wp plugin activate "$$slug" --path=/var/www/html || true;
           elif wp plugin is-installed "$$slug" --path=/var/www/html >/dev/null 2>&1; then
+            wp plugin update "$$slug" --path=/var/www/html || true;
             wp plugin activate "$$slug" --path=/var/www/html || true;
           fi;
         };
         wp theme activate gojago-starter --path=/var/www/html;
         wp plugin install all-in-one-wp-migration --force --activate --path=/var/www/html || true;
+        wp plugin update all-in-one-wp-migration --path=/var/www/html || true;
         install_zip_plugin_if_available wp-cerber wp-cerber/wp-cerber.php wp-cerber cerber;
         install_zip_plugin_if_available advanced-custom-fields-pro advanced-custom-fields-pro/acf.php acf-pro advanced-custom-fields-pro;
         install_zip_plugin_if_available gravityforms gravityforms/gravityforms.php gravityforms gravity-forms;

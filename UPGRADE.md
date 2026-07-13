@@ -17,6 +17,12 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.4 to v1.1.5
+
+- Update `docker-compose.yml` so local setup chooses the newest matching plugin ZIP from `plugins/`, installs it with force/overwrite behavior, then runs the WordPress plugin updater.
+- Copy the updated `app/setup/required-plugins.php` helper so wp-admin install actions can overwrite existing ZIP-installed plugins and request the latest official update before activation.
+- When replacing ACF Pro, Gravity Forms Pro, WP Cerber, or another local ZIP plugin, put the ZIP in `plugins/` and rerun setup or use the wp-admin reminder action. Paid-plugin latest updates still require the plugin vendor's license/update channel to be available.
+
 ## From v1.1.3 to v1.1.4
 
 - Remove duplicate root-level `templates/`, `parts/`, and `patterns/` folders from client themes.
