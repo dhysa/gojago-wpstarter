@@ -4,6 +4,11 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.4 - 2026-07-13
+
+- Clarified that `resources/views` is the only source location for block templates, template parts, and patterns.
+- Removed references to duplicate root-level `templates/`, `parts/`, and `patterns/` theme folders.
+
 ## v1.1.3 - 2026-07-13
 
 - Removed All-in-One WP Migration Unlimited Extension from starter requirements, automatic setup, and dashboard reminder checks.

@@ -121,11 +121,11 @@ Build output:
 - `plugins/`: ignored local folder for licensed commercial plugin ZIPs
 - `wordpress/`: ignored bind-mounted WordPress runtime files
 - `wp-content/themes/gojago-starter/`: the only custom theme
-- `wp-content/themes/gojago-starter/inc/`: modular PHP setup
-- `wp-content/themes/gojago-starter/templates/`: block templates
-- `wp-content/themes/gojago-starter/parts/`: editable header/footer template parts
-- `wp-content/themes/gojago-starter/patterns/`: reusable homepage patterns
-- `wp-content/themes/gojago-starter/src/blocks/example-block/`: example advanced block
+- `wp-content/themes/gojago-starter/app/`: modular PHP setup
+- `wp-content/themes/gojago-starter/resources/views/templates/`: block templates
+- `wp-content/themes/gojago-starter/resources/views/parts/`: editable header/footer template parts
+- `wp-content/themes/gojago-starter/resources/views/patterns/`: reusable homepage patterns
+- `wp-content/themes/gojago-starter/resources/views/partials/block/example-block/`: example advanced block source
 
 ## Layout Defaults
 
@@ -170,7 +170,7 @@ Expected ZIP content: `advanced-custom-fields-pro/acf.php`.
 
 The theme adds ACF local JSON save/load paths at:
 
-- `wp-content/themes/gojago-starter/inc/acf/json/`
+- `wp-content/themes/gojago-starter/acf-json/`
 
 Manual upload path:
 
@@ -195,8 +195,8 @@ Manual upload path:
 
 Theme hooks and CSS are ready for Gravity Forms styling in:
 
-- `wp-content/themes/gojago-starter/inc/gravity-forms/gravity-forms.php`
-- `wp-content/themes/gojago-starter/src/css/main.css`
+- `wp-content/themes/gojago-starter/app/gravity-forms/gravity-forms.php`
+- `wp-content/themes/gojago-starter/resources/styles/app.css`
 
 ## Plugin ZIP Handling
 
@@ -220,7 +220,7 @@ The theme supports `title-tag`, semantic templates, proper heading structures in
 
 SEO helper file:
 
-- `wp-content/themes/gojago-starter/inc/seo/seo.php`
+- `wp-content/themes/gojago-starter/app/seo/seo.php`
 
 Production projects can add a dedicated SEO plugin or extend this scaffold.
 
@@ -233,7 +233,7 @@ Analytics is configured through environment/config placeholders, not hardcoded p
 
 Analytics helper file:
 
-- `wp-content/themes/gojago-starter/inc/analytics/analytics.php`
+- `wp-content/themes/gojago-starter/app/analytics/analytics.php`
 
 Add approved GA4/GTM production snippets there.
 
@@ -241,7 +241,7 @@ Add approved GA4/GTM production snippets there.
 
 The custom 404 is a block template:
 
-- `wp-content/themes/gojago-starter/templates/404.html`
+- `wp-content/themes/gojago-starter/resources/views/templates/404.html`
 
 It includes a clear heading, supportive copy, search, and a home link.
 
@@ -289,7 +289,7 @@ Verified on June 23, 2026:
 - Deleted bundled default Twenty* themes: deleted installed Twenty Twenty-Three, Twenty Twenty-Four, and Twenty Twenty-Five; Twenty Twenty-Two and Twenty Twenty-Six were not present
 - `npm install`: completed with upstream WordPress package peer/deprecation warnings and npm audit findings
 - `npm run build`: passed
-- PHP lint in WordPress container: `functions.php` and `inc/setup/required-plugins.php` passed
+- PHP lint in WordPress container: `functions.php` and `app/setup/required-plugins.php` passed
 - Upload limits: `upload_max_filesize=64M`, `post_max_size=64M`, `memory_limit=256M`
 - Footer attribution: confirmed `Created by Gojago`
 - Custom 404: confirmed output renders

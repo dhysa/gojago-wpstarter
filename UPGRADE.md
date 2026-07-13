@@ -17,6 +17,12 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.3 to v1.1.4
+
+- Remove duplicate root-level `templates/`, `parts/`, and `patterns/` folders from client themes.
+- Keep `resources/views/templates`, `resources/views/parts`, and `resources/views/patterns` as the source of truth.
+- Confirm `app/setup/views.php` is loaded from `functions.php`, because it maps `resources/views` into WordPress block template loading.
+
 ## From v1.1.2 to v1.1.3
 
 - Remove any project-specific requirement/reminder for All-in-One WP Migration Unlimited Extension.
