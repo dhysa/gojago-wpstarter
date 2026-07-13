@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'GOJAGO_STARTER_VERSION', '1.1.1' );
+define( 'GOJAGO_STARTER_VERSION', '1.1.2' );
 define( 'GOJAGO_STARTER_PATH', trailingslashit( get_template_directory() ) );
 define( 'GOJAGO_STARTER_URI', trailingslashit( get_template_directory_uri() ) );
 

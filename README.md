@@ -6,6 +6,67 @@ No `inspo/` folder was present when this starter was generated, so the theme use
 
 The theme defaults page containers to full width. Individual sections use full-width top-level blocks, with constrained inner wrappers only where content readability or navigation layout needs it.
 
+## Starter Factory Workflow
+
+This repository is not intended to become every client project's GitHub repository. Use it as the base development environment for building and testing the Gojago WordPress theme locally.
+
+Recommended flow:
+
+1. Develop locally in this starter repo with Docker, WordPress, WP-CLI, and the full theme toolchain.
+2. Keep reusable boilerplate improvements in this repo.
+3. Export only the theme when a client project needs code.
+4. Commit the exported theme into the client repository.
+
+Export the theme:
+
+```bash
+bin/export-theme
+```
+
+Output:
+
+- `dist/gojago-starter-vX.Y.Z/`
+- `dist/gojago-starter-vX.Y.Z.zip`
+
+The export command builds theme assets, copies `wp-content/themes/gojago-starter`, and excludes local-only folders such as `node_modules`.
+
+If you already built the theme and want to skip rebuilding:
+
+```bash
+SKIP_BUILD=1 bin/export-theme
+```
+
+## Versioning
+
+The starter version is tracked in `STARTER_VERSION`.
+
+Use Git tags for stable starter releases:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Use semantic versioning:
+
+- `PATCH`, for fixes that should be safe for existing client themes, for example `v1.0.1`
+- `MINOR`, for compatible starter/theme improvements, for example `v1.1.0`
+- `MAJOR`, for breaking changes or large restructuring, for example `v2.0.0`
+
+Before tagging a new version, bump the shared starter/theme version:
+
+```bash
+bin/bump-version 1.1.0
+```
+
+Then:
+
+1. Update `CHANGELOG.md`.
+2. Add file-level notes to `UPGRADE.md` when existing client themes may need manual changes.
+3. Run `bin/export-theme`.
+4. Commit the changes.
+5. Tag the release.
+
 ## Requirements
 
 - Docker with Docker Compose

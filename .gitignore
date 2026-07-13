@@ -4,6 +4,7 @@ node_modules/
 npm-debug.log*
 wp-content/themes/gojago-starter/assets/css/*.map
 wp-content/themes/gojago-starter/build/
+dist/
 wordpress/
 plugins/*
 !plugins/.gitkeep
