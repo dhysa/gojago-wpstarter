@@ -17,6 +17,12 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.5 to v1.1.6
+
+- Replace fake starter content pages such as About, Services, and Contact with only Home plus a disposable Starter Features page.
+- Update native WordPress menu seeding so Primary Menu uses Home and Starter Features, while Footer Menu uses Starter Features.
+- Existing client projects can safely delete old fake starter pages and the Starter Features page once real sitemap/content is ready.
+
 ## From v1.1.4 to v1.1.5
 
 - Update `docker-compose.yml` so local setup chooses the newest matching plugin ZIP from `plugins/`, installs it with force/overwrite behavior, then runs the WordPress plugin updater.

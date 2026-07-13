@@ -4,6 +4,12 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.6 - 2026-07-13
+
+- Replaced multi-page starter seed content with a minimal Home page and one disposable Starter Features inventory page.
+- Updated native WordPress Primary/Footer menu seeding to use the Home and Starter Features pages instead of fake client pages.
+- Documented that the Starter Features page is temporary and safe to delete after project setup.
+
 ## v1.1.5 - 2026-07-13
 
 - Updated ZIP-based plugin installs to select the newest matching package instead of the first match.

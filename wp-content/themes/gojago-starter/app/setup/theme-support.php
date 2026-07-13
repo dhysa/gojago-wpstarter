@@ -33,44 +33,46 @@ add_action(
 add_action(
 	'after_switch_theme',
 	function () {
-		$pages = array(
-			'Home'     => gojago_starter_home_content(),
-			'About'    => '<!-- wp:heading --><h2>About Gojago Starter</h2><!-- /wp:heading --><!-- wp:paragraph --><p>This page is ready for client-specific story, proof, and team content.</p><!-- /wp:paragraph -->',
-			'Services' => '<!-- wp:heading --><h2>Services</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Add service descriptions, pricing notes, or project workflows here.</p><!-- /wp:paragraph -->',
-			'Contact'  => '<!-- wp:heading --><h2>Contact</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Add contact details or a Gravity Forms embed after installing Gravity Forms Pro.</p><!-- /wp:paragraph -->',
-		);
-
-		$page_ids = array();
-		foreach ( $pages as $title => $content ) {
-			$page = get_page_by_title( $title );
-			if ( ! $page ) {
-				$page_id = wp_insert_post(
-					array(
-						'post_title'   => $title,
-						'post_name'    => sanitize_title( $title ),
-						'post_status'  => 'publish',
-						'post_type'    => 'page',
-						'post_content' => $content,
-					)
-				);
-			} else {
-				$page_id = $page->ID;
-			}
-
-			if ( ! is_wp_error( $page_id ) ) {
-				$page_ids[ $title ] = (int) $page_id;
-			}
-		}
-
-		if ( isset( $page_ids['Home'] ) ) {
-			update_option( 'show_on_front', 'page' );
-			update_option( 'page_on_front', $page_ids['Home'] );
-		}
-
-		gojago_starter_seed_classic_menu( 'Primary Menu', 'primary', array( 'Home', 'About', 'Services', 'Contact' ), $page_ids );
-		gojago_starter_seed_classic_menu( 'Footer Menu', 'footer', array( 'About', 'Services', 'Contact' ), $page_ids );
+		gojago_starter_seed_content();
 	}
 );
+
+function gojago_starter_seed_content() {
+	$pages = array(
+		'Home'             => gojago_starter_home_content(),
+		'Starter Features' => gojago_starter_features_content(),
+	);
+
+	$page_ids = array();
+	foreach ( $pages as $title => $content ) {
+		$page = get_page_by_title( $title );
+		if ( ! $page ) {
+			$page_id = wp_insert_post(
+				array(
+					'post_title'   => $title,
+					'post_name'    => sanitize_title( $title ),
+					'post_status'  => 'publish',
+					'post_type'    => 'page',
+					'post_content' => $content,
+				)
+			);
+		} else {
+			$page_id = $page->ID;
+		}
+
+		if ( ! is_wp_error( $page_id ) ) {
+			$page_ids[ $title ] = (int) $page_id;
+		}
+	}
+
+	if ( isset( $page_ids['Home'] ) ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $page_ids['Home'] );
+	}
+
+	gojago_starter_seed_classic_menu( 'Primary Menu', 'primary', array( 'Home', 'Starter Features' ), $page_ids );
+	gojago_starter_seed_classic_menu( 'Footer Menu', 'footer', array( 'Starter Features' ), $page_ids );
+}
 
 function gojago_starter_seed_classic_menu( $menu_name, $location, $page_titles, $page_ids ) {
 	$menu = wp_get_nav_menu_object( $menu_name );
@@ -85,7 +87,13 @@ function gojago_starter_seed_classic_menu( $menu_name, $location, $page_titles, 
 	}
 
 	$existing = wp_get_nav_menu_items( $menu_id );
-	if ( empty( $existing ) ) {
+	if ( empty( $existing ) || gojago_starter_is_replaceable_seed_menu( $existing ) ) {
+		if ( ! empty( $existing ) ) {
+			foreach ( $existing as $item ) {
+				wp_delete_post( $item->ID, true );
+			}
+		}
+
 		foreach ( $page_titles as $title ) {
 			if ( isset( $page_ids[ $title ] ) ) {
 				wp_update_nav_menu_item(
@@ -108,6 +116,18 @@ function gojago_starter_seed_classic_menu( $menu_name, $location, $page_titles, 
 	set_theme_mod( 'nav_menu_locations', $locations );
 }
 
+function gojago_starter_is_replaceable_seed_menu( $items ) {
+	$starter_titles = array( 'Home', 'Starter Features', 'About', 'Services', 'Contact' );
+
+	foreach ( $items as $item ) {
+		if ( ! in_array( $item->title, $starter_titles, true ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function gojago_starter_home_content() {
 	$pattern_files = array(
 		'resources/views/patterns/hero.php',
@@ -121,4 +141,50 @@ function gojago_starter_home_content() {
 	}
 
 	return trim( $content );
+}
+
+function gojago_starter_features_content() {
+	return trim(
+		'<!-- wp:group {"align":"full","className":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|40","bottom":"var:preset|spacing|80","left":"var:preset|spacing|40"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull section" style="padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"align":"wide","className":"section-readable","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide section-readable"><!-- wp:heading {"level":1,"fontSize":"heading-1"} -->
+<h1 class="wp-block-heading has-heading-1-font-size">Starter Features</h1>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"fontSize":"lead"} -->
+<p class="has-lead-font-size">This is a temporary starter inventory page. Review it during setup, then delete it when the real client sitemap is ready.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list -->
+<ul><!-- wp:list-item -->
+<li>Gutenberg-first block theme with templates, parts, patterns, and a custom block example.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Tailwind-backed theme styles and editor styles.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Native WordPress primary and footer menu locations.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Custom login entry at /managesite with wp-login.php hardening.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Required plugin setup for WP Cerber Security, All-in-One WP Migration, ACF Pro, and Gravity Forms Pro.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>ZIP plugin bootstrap followed by the WordPress updater when a valid official update channel is available.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Admin cleanup that hides Edit Site and exposes Customize CSS.</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->'
+	);
 }

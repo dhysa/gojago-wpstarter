@@ -132,6 +132,7 @@ services:
           fi;
         };
         wp theme activate gojago-starter --path=/var/www/html;
+        wp eval "if ( function_exists( '\''gojago_starter_seed_content'\'' ) ) { gojago_starter_seed_content(); }" --path=/var/www/html || true;
         wp plugin install all-in-one-wp-migration --force --activate --path=/var/www/html || true;
         wp plugin update all-in-one-wp-migration --path=/var/www/html || true;
         install_zip_plugin_if_available wp-cerber wp-cerber/wp-cerber.php wp-cerber cerber;

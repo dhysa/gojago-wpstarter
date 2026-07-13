@@ -100,7 +100,7 @@ Container names follow `${PROJECT_NAME}` from `.env`:
 - `project_phpmyadmin`
 - `project_wpcli`
 
-The `wpcli` service installs WordPress when needed, activates `gojago-starter`, sets pretty permalinks, deletes default Twenty* themes when possible, and seeds starter pages/menus through theme activation.
+The `wpcli` service installs WordPress when needed, activates `gojago-starter`, sets pretty permalinks, deletes default Twenty* themes when possible, and seeds a minimal Home page, a disposable Starter Features inventory page, and native WordPress menus through theme activation.
 
 ## Theme Build
 
@@ -149,6 +149,8 @@ Edit header/footer menu items:
 - Registered locations: `Primary Menu` and `Footer Menu`
 
 The header and footer template parts do not hardcode production menu links. Navigation is managed through WordPress menus/navigation.
+
+Starter content creates only the Home page and a temporary `Starter Features` page. The features page exists as a quick setup checklist and can be deleted once the real client sitemap/content is ready.
 
 Edit homepage sections:
 
