@@ -10,15 +10,15 @@
   <!-- wp:group {"align":"wide","className":"starter-overview__inner"} -->
   <div class="wp-block-group alignwide starter-overview__inner">
     <!-- wp:heading {"level":1,"fontSize":"heading-1"} -->
-    <h1 class="wp-block-heading has-heading-1-font-size">Gojago Starter</h1>
+    <h1 class="wp-block-heading has-heading-1-font-size">Applied Starter Features</h1>
     <!-- /wp:heading -->
 
     <!-- wp:paragraph {"textColor":"muted"} -->
-    <p class="has-muted-color has-text-color">Starter inventory only. Delete this page content when you begin building the real WordPress template.</p>
+    <p class="has-muted-color has-text-color">This first page lists the starter features already applied to this WordPress install. It is temporary starter content, so it is safe to delete or replace when the real client homepage is ready.</p>
     <!-- /wp:paragraph -->
 
     <!-- wp:heading {"level":2} -->
-    <h2 class="wp-block-heading">Features included</h2>
+    <h2 class="wp-block-heading">Applied checklist</h2>
     <!-- /wp:heading -->
 
     <!-- wp:list -->
@@ -38,6 +38,7 @@
       <li>Custom 404 template</li>
       <li>ACF JSON folder</li>
       <li>Clean source/output folder hierarchy</li>
+      <li>Default WordPress plugins such as Hello Dolly and Akismet removed during setup</li>
     </ul>
     <!-- /wp:list -->
   </div>

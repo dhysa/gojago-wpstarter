@@ -1,6 +1,6 @@
 {
   "name": "gojago-starter",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "private": true,
   "scripts": {
     "dev": "wp-scripts start resources/views/partials/block/example-block/index.js --output-path=public/blocks/example-block & tailwindcss -i ./resources/styles/app.css -o ./public/css/app.css --watch",

@@ -129,30 +129,29 @@ function gojago_starter_is_replaceable_seed_menu( $items ) {
 }
 
 function gojago_starter_home_content() {
-	$pattern_files = array(
-		'resources/views/patterns/hero.php',
+	return gojago_starter_applied_features_content(
+		__( 'Applied Starter Features', 'gojago-starter' ),
+		__( 'This first page lists the starter features already applied to this WordPress install. It is temporary starter content, so it is safe to delete or replace when the real client homepage is ready.', 'gojago-starter' )
 	);
-
-	$content = '';
-	foreach ( $pattern_files as $pattern_file ) {
-		ob_start();
-		include GOJAGO_STARTER_PATH . $pattern_file;
-		$content .= trim( ob_get_clean() ) . "\n\n";
-	}
-
-	return trim( $content );
 }
 
 function gojago_starter_features_content() {
+	return gojago_starter_applied_features_content(
+		__( 'Starter Features', 'gojago-starter' ),
+		__( 'This is a temporary starter inventory page. Review it during setup, then delete it when the real client sitemap is ready.', 'gojago-starter' )
+	);
+}
+
+function gojago_starter_applied_features_content( $title, $intro ) {
 	return trim(
 		'<!-- wp:group {"align":"full","className":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","right":"var:preset|spacing|40","bottom":"var:preset|spacing|80","left":"var:preset|spacing|40"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull section" style="padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"align":"wide","className":"section-readable","layout":{"type":"default"}} -->
 <div class="wp-block-group alignwide section-readable"><!-- wp:heading {"level":1,"fontSize":"heading-1"} -->
-<h1 class="wp-block-heading has-heading-1-font-size">Starter Features</h1>
+<h1 class="wp-block-heading has-heading-1-font-size">' . esc_html( $title ) . '</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"fontSize":"lead"} -->
-<p class="has-lead-font-size">This is a temporary starter inventory page. Review it during setup, then delete it when the real client sitemap is ready.</p>
+<p class="has-lead-font-size">' . esc_html( $intro ) . '</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:list -->
@@ -182,6 +181,14 @@ function gojago_starter_features_content() {
 
 <!-- wp:list-item -->
 <li>Admin cleanup that hides Edit Site and exposes Customize CSS.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Default WordPress plugins such as Hello Dolly and Akismet removed during setup.</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item -->
+<li>Only the custom starter theme kept active after setup; bundled Twenty themes are removed when possible.</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:group --></div>

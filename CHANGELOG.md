@@ -4,6 +4,12 @@ All notable changes to the Gojago WordPress Starter are documented here.
 
 This repository is a development starter factory. Client repositories should usually receive only the exported theme from `wp-content/themes/gojago-starter`.
 
+## v1.1.8 - 2026-07-13
+
+- Changed the initial Home page to list applied starter features instead of showing generic marketing copy, with copy that marks the page as safe to delete or replace.
+- Removed the Docker setup homepage override so reruns keep the applied-features homepage seeded by the theme.
+- Expanded the feature checklist with default plugin and bundled theme cleanup notes.
+
 ## v1.1.7 - 2026-07-13
 
 - Fixed custom login flow so successful `/managesite` logins land in the WordPress dashboard instead of the login route or a not-found page.

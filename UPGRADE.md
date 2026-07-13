@@ -17,6 +17,12 @@ The safest workflow is usually manual or cherry-picked, because client projects 
 4. Run the client theme build.
 5. Test the client site locally.
 
+## From v1.1.7 to v1.1.8
+
+- Update starter seed content so the first Home page lists the features already applied to the install.
+- Remove any Docker/WP-CLI homepage override that replaces the feature checklist with generic starter copy.
+- Existing client projects can ignore this content change if their real homepage is already built.
+
 ## From v1.1.6 to v1.1.7
 
 - Copy the updated `wp-content/mu-plugins/gojago-login-hardening.php` into projects using `/managesite`.

@@ -109,15 +109,6 @@ services:
           [ -n "$$match" ] && { printf "%s" "$$match"; return 0; };
           return 1;
         };
-        seed_clean_homepage() {
-          home_id="$$(wp option get page_on_front --path=/var/www/html 2>/dev/null || true)";
-          if [ -z "$$home_id" ] || [ "$$home_id" = "0" ]; then
-            home_id="$$(wp post create --post_type=page --post_status=publish --post_title="Home" --porcelain --path=/var/www/html)";
-          fi;
-          wp post update "$$home_id" --post_title="Home" --post_content="<!-- wp:group {\"align\":\"full\",\"className\":\"section\",\"style\":{\"spacing\":{\"padding\":{\"top\":\"var:preset|spacing|80\",\"right\":\"var:preset|spacing|40\",\"bottom\":\"var:preset|spacing|80\",\"left\":\"var:preset|spacing|40\"}}},\"backgroundColor\":\"base\",\"layout\":{\"type\":\"constrained\"}} --><div class=\"wp-block-group alignfull section has-base-background-color has-background\" style=\"padding-top:var(--wp--preset--spacing--80);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--80);padding-left:var(--wp--preset--spacing--40)\"><!-- wp:group {\"align\":\"wide\",\"className\":\"section-readable\",\"layout\":{\"type\":\"default\"}} --><div class=\"wp-block-group alignwide section-readable\"><!-- wp:heading {\"level\":1,\"fontSize\":\"heading-1\"} --><h1 class=\"wp-block-heading has-heading-1-font-size\">Clean WordPress starter for client projects.</h1><!-- /wp:heading --><!-- wp:paragraph {\"fontSize\":\"lead\"} --><p class=\"has-lead-font-size\">A neutral, editor-first baseline with editable blocks, clean spacing, and production-ready setup defaults.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class=\"wp-block-buttons\"><!-- wp:button --><div class=\"wp-block-button\"><a class=\"wp-block-button__link wp-element-button\" href=\"/managesite\">Open admin</a></div><!-- /wp:button --></div><!-- /wp:buttons --></div><!-- /wp:group --></div><!-- /wp:group -->" --path=/var/www/html || true;
-          wp option update show_on_front page --path=/var/www/html;
-          wp option update page_on_front "$$home_id" --path=/var/www/html;
-        };
         install_zip_plugin_if_available() {
           slug="$$1";
           plugin_file="$$2";
@@ -141,7 +132,7 @@ services:
         wp plugin delete hello akismet --path=/var/www/html || true;
         wp theme delete twentytwentysix twentytwentyfive twentytwentyfour twentytwentythree twentytwentytwo --path=/var/www/html || true;
         wp post delete 1 2 --force --path=/var/www/html || true;
-        seed_clean_homepage;
+        wp eval "if ( function_exists( '\''gojago_starter_seed_content'\'' ) ) { gojago_starter_seed_content(); }" --path=/var/www/html || true;
         wp rewrite structure "/%postname%/" --path=/var/www/html;
         wp rewrite flush --hard --path=/var/www/html;
         wp option update blogdescription "Editor-first WordPress starter for client projects." --path=/var/www/html;
